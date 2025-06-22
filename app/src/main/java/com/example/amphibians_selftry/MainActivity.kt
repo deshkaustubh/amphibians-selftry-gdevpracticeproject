@@ -8,10 +8,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.example.amphibians_selftry.ui.theme.AmphibiansselftryTheme
+import com.example.amphibians_selftry.view.HomeScreen
 import com.example.amphibians_selftry.viewModel.AmphibiansViewModel
 
 class MainActivity : ComponentActivity() {
-    private lateinit var viewModel: AmphibiansViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,7 +21,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-
+                    val amphibiansViewModel: AmphibiansViewModel = AmphibiansViewModel()
+                    HomeScreen(amphibiansUiState = amphibiansViewModel.amphibiansUiState)
                 }
             }
         }

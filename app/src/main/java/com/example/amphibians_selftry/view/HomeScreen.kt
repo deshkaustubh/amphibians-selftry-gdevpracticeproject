@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.amphibians_selftry.viewModel.AmphibiansUiState
+import com.example.amphibians_selftry.viewModel.AmphibiansViewModel
 
 
 @Composable
@@ -30,7 +31,7 @@ fun HomeScreen(
 ) {
     when (amphibiansUiState) {
         is AmphibiansUiState.Loading -> LoadingScreen(modifier = modifier.fillMaxSize())
-        is AmphibiansUiState.Success -> ResultScreen()
+        is AmphibiansUiState.Success -> ResultScreen(amphibians = amphibiansUiState.amphibians)
         is AmphibiansUiState.Error -> ErrorScreen(modifier = modifier.fillMaxSize())
     }
 }
@@ -89,11 +90,11 @@ fun ErrorScreen(modifier: Modifier = Modifier) {
 
 
 @Composable
-fun ResultScreen(modifier: Modifier = Modifier) {
+fun ResultScreen(modifier: Modifier = Modifier, amphibians: String) {
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier
     ) {
-
+        Text(text = amphibians)
     }
 }

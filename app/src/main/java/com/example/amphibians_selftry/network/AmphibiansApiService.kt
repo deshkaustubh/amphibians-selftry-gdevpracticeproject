@@ -21,7 +21,7 @@ When you call getAmphibians(), Retrofit fetches the data and deserializes it int
 This setup ensures type safety and easy access to the API data as Kotlin objects. The data class is essential for mapping the JSON response to usable Kotlin objects in your app.
  */
 interface AmphibiansApiService {
-    @GET("amphibians")
+    @GET("amphibians/")
     fun getAmphibians(): List<AmphibiansDataClass>
 }
 
