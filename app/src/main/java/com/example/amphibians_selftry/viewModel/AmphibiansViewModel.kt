@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.amphibians_selftry.network.AmphibiansApi
 import kotlinx.coroutines.launch
-import retrofit2.http.GET
+import retrofit2.HttpException
 import java.io.IOException
 
 
@@ -22,17 +22,24 @@ class AmphibiansViewModel : ViewModel() {
     var amphibiansUiState: AmphibiansUiState by mutableStateOf(AmphibiansUiState.Loading)
         private set
 
-    @GET("amphibians")
-    suspend fun getAmphibians() {
+    init {
+        getAmphibians()
+    }
+
+    fun getAmphibians() {
         viewModelScope.launch {
-            try {
+            amphibiansUiState = AmphibiansUiState.Loading
+            amphibiansUiState = try {
                 val listResult = AmphibiansApi.retrofitService.getAmphibians()
-                AmphibiansUiState.Success("Success: ${listResult.size} mars photos retrieved")
-                // This AmphibiansApi is the object not the service directly called as we implemented earlier
-            }catch (e: IOException) {
+                AmphibiansUiState.Success(
+                    "Success: ${listResult.size} Mars photos retrieved"
+                )
+            } catch (e: IOException) {
+                AmphibiansUiState.Error
+            } catch (e: HttpException) {
                 AmphibiansUiState.Error
             }
-
         }
+
     }
 }

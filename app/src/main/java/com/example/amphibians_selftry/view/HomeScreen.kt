@@ -3,6 +3,7 @@ package com.example.amphibians_selftry.view
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -21,13 +22,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.amphibians_selftry.viewModel.AmphibiansUiState
-import com.example.amphibians_selftry.viewModel.AmphibiansViewModel
 
 
 @Composable
 fun HomeScreen(
     amphibiansUiState: AmphibiansUiState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues(0.dp)
 ) {
     when (amphibiansUiState) {
         is AmphibiansUiState.Loading -> LoadingScreen(modifier = modifier.fillMaxSize())
