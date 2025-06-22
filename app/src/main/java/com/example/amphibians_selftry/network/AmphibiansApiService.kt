@@ -1,19 +1,28 @@
 ﻿package com.example.amphibians_selftry.network
 
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import kotlinx.serialization.json.Json
+import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Retrofit
-import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.GET
 
 private const val BASE_URL = "https://android-kotlin-fun-mars-server.appspot.com/"
 
 private val retrofit = Retrofit.Builder()
-    .addConverterFactory(ScalarsConverterFactory.create())
+    .addConverterFactory(Json.asConverterFactory("application/json".toMediaType())) // This line tells Retrofit to use Kotlinx Serialization to automatically convert JSON data from the API into Kotlin objects, and vice versa, using the "application/json" content type.
     .baseUrl(BASE_URL)
     .build()
 
+/*
+Retrofit uses the return type of the getAmphibians() function (List<AmphibiansDataClass>) to know what data to expect from the API. The AmphibiansDataClass is your Kotlin data class that matches the JSON structure returned by the API.  Here's how it works:
+You define AmphibiansDataClass to match the API response fields.
+Retrofit, with the help of the converter (Json.asConverterFactory), automatically parses the JSON response into a list of AmphibiansDataClass objects.
+When you call getAmphibians(), Retrofit fetches the data and deserializes it into your data class.
+This setup ensures type safety and easy access to the API data as Kotlin objects. The data class is essential for mapping the JSON response to usable Kotlin objects in your app.
+ */
 interface AmphibiansApiService {
     @GET("amphibians")
-    fun getAmphibians(): String
+    fun getAmphibians(): List<AmphibiansDataClass>
 }
 
 // object declarations are singletons and are used to ensure that only one instance of
