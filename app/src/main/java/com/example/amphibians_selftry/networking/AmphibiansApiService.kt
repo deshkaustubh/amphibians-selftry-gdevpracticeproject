@@ -15,5 +15,5 @@ private val retrofit = Retrofit.Builder()
 
 interface AmphibiansApiService{
     @GET("amphibians")
-    suspend fun getAmphibians(): List<Amphibians>
+    suspend fun getAmphibians(): List<AmphibiansDto>
 }
