@@ -22,7 +22,17 @@ This setup ensures type safety and easy access to the API data as Kotlin objects
  */
 interface AmphibiansApiService {
     @GET("amphibians")
-    fun getAmphibians(): List<AmphibiansDataClass>
+    suspend fun getAmphibians(): List<AmphibiansDataClass>
+    // ⚠️ IMPORTANT: Always use 'suspend' with Retrofit service functions when returning plain Kotlin types like List<T>
+// Without 'suspend', Retrofit doesn't know how to adapt the return type and will throw:
+// "IllegalArgumentException: Unable to create call adapter for List<...>"
+// This is because we're using kotlinx.serialization with Json.asConverterFactory()
+// Retrofit needs either:
+// - suspend functions (for coroutine support)
+// - or explicit wrappers like Call<T>, Flow<T>, etc.
+// ✅ So always write:
+// suspend fun getAmphibians(): List<AmphibiansDataClass>
+
 }
 
 // object declarations are singletons and are used to ensure that only one instance of
