@@ -8,9 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.example.amphibians_selftry.ui.theme.AmphibiansselftryTheme
-import com.example.amphibians_selftry.view.HomeScreen
-import com.example.amphibians_selftry.view.MarsPhotosApp
-import com.example.amphibians_selftry.viewModel.AmphibiansViewModel
+import com.example.amphibians_selftry.view.AmphibiansApp
 
 class MainActivity : ComponentActivity() {
 
@@ -22,7 +20,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MarsPhotosApp()
+                    AmphibiansApp()
                 }
             }
         }

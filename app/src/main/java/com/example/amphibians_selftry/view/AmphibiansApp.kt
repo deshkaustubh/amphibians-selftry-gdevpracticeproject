@@ -21,11 +21,11 @@ import com.example.amphibians_selftry.viewModel.AmphibiansViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MarsPhotosApp() {
+fun AmphibiansApp() {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-        topBar = { MarsTopAppBar(scrollBehavior = scrollBehavior) }
+        topBar = { AmphibiansAppBar(scrollBehavior = scrollBehavior) }
     ) {
         Surface(
             modifier = Modifier.fillMaxSize()
@@ -41,7 +41,7 @@ fun MarsPhotosApp() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MarsTopAppBar(scrollBehavior: TopAppBarScrollBehavior, modifier: Modifier = Modifier) {
+fun AmphibiansAppBar(scrollBehavior: TopAppBarScrollBehavior, modifier: Modifier = Modifier) {
     CenterAlignedTopAppBar(
         scrollBehavior = scrollBehavior,
         title = {
