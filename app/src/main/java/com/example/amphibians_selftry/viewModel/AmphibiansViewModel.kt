@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.amphibians_selftry.data.NetworkAmphibiansRepository
 import com.example.amphibians_selftry.network.AmphibiansApi
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
@@ -30,7 +31,8 @@ class AmphibiansViewModel : ViewModel() {
         viewModelScope.launch {
             amphibiansUiState = AmphibiansUiState.Loading
             amphibiansUiState = try {
-                val listResult = AmphibiansApi.retrofitService.getAmphibians()
+                val amphibiansRepository = NetworkAmphibiansRepository()
+                val listResult = amphibiansRepository.getAmphibians()
                 AmphibiansUiState.Success(
                     "Success: ${listResult.size} Mars photos retrieved"
                 )
