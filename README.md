@@ -108,13 +108,15 @@ The UI layer is built with Jetpack Compose and consists of:
 
 ## Screenshots
 
-<div style="display: flex; justify-content: center">
-  <img src=".README_images/3a5f6509.png" width="300" alt="Amphibians List Screen" style="margin-right: 20px"/>
-  <img src=".README_images/bfd1680b.png" width="300" alt="Amphibian Detail Screen"/>
+<div align="center">
+  <p align="center" style="display: flex; justify-content: space-evenly; align-items: center; gap: 40px;">
+    <img src=".README_images/3a5f6509.png" width="300" alt="Amphibians List Screen"/>
+    <img src=".README_images/bfd1680b.png" width="300" alt="Amphibian Detail Screen"/>
+  </p>
 </div>
 
 <!-- Alternate format for GitHub compatibility -->
-<p float="left">
-  <img src=".README_images/3a5f6509.png" width="300" />
-  <img src=".README_images/bfd1680b.png" width="300" /> 
+<p align="center">
+  <img src=".README_images/3a5f6509.png" width="300" style="margin-right: 40px"/>
+  <img src=".README_images/bfd1680b.png" width="300"/> 
 </p>
