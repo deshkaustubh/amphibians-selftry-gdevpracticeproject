@@ -4,7 +4,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
+import com.example.amphibians_selftry.AmphibiansApplication
+import com.example.amphibians_selftry.data.AmphibiansRepository
 import com.example.amphibians_selftry.data.NetworkAmphibiansRepository
 import com.example.amphibians_selftry.network.AmphibiansApi
 import kotlinx.coroutines.launch
@@ -19,7 +25,7 @@ sealed interface AmphibiansUiState {
 }
 
 
-class AmphibiansViewModel : ViewModel() {
+class AmphibiansViewModel(private val amphibiansRepository: AmphibiansRepository) : ViewModel() {
     var amphibiansUiState: AmphibiansUiState by mutableStateOf(AmphibiansUiState.Loading)
         private set
 
@@ -31,7 +37,6 @@ class AmphibiansViewModel : ViewModel() {
         viewModelScope.launch {
             amphibiansUiState = AmphibiansUiState.Loading
             amphibiansUiState = try {
-                val amphibiansRepository = NetworkAmphibiansRepository()
                 val listResult = amphibiansRepository.getAmphibians()
                 AmphibiansUiState.Success(
                     "Success: ${listResult.size} Mars photos retrieved"
@@ -42,6 +47,15 @@ class AmphibiansViewModel : ViewModel() {
                 AmphibiansUiState.Error
             }
         }
+    }
 
+    companion object {
+        val Factory: ViewModelProvider.Factory = viewModelFactory {
+            initializer {
+                val application = (this[APPLICATION_KEY] as AmphibiansApplication)
+                val amphibiansRepository = application.container.amphibiansRepository
+                AmphibiansViewModel(amphibiansRepository = amphibiansRepository)
+            }
+        }
     }
 }

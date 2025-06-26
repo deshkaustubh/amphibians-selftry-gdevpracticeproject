@@ -22,6 +22,7 @@ import com.example.amphibians_selftry.viewModel.AmphibiansViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AmphibiansApp() {
+    val amphibiansViewModel : AmphibiansViewModel = viewModel(factory = AmphibiansViewModel.Factory)
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
