@@ -4,14 +4,21 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -19,8 +26,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
+import com.example.amphibians_selftry.network.AmphibiansDataClass
 import com.example.amphibians_selftry.viewModel.AmphibiansUiState
 
 
@@ -28,11 +40,16 @@ import com.example.amphibians_selftry.viewModel.AmphibiansUiState
 fun HomeScreen(
     amphibiansUiState: AmphibiansUiState,
     modifier: Modifier = Modifier,
-    contentPadding: PaddingValues = PaddingValues(0.dp)
+    contentPadding: PaddingValues = PaddingValues(8.dp)
 ) {
     when (amphibiansUiState) {
         is AmphibiansUiState.Loading -> LoadingScreen(modifier = modifier.fillMaxSize())
-        is AmphibiansUiState.Success -> ResultScreen(amphibians = amphibiansUiState.amphibians)
+        is AmphibiansUiState.Success -> AmphibiansList(
+            amphibiansUiState.amphibians,
+            modifier = Modifier.fillMaxSize(),
+            contentPadding = contentPadding
+        )
+
         is AmphibiansUiState.Error -> ErrorScreen(modifier = modifier.fillMaxSize())
     }
 }
@@ -98,4 +115,67 @@ fun ResultScreen(modifier: Modifier = Modifier, amphibians: String) {
     ) {
         Text(text = amphibians)
     }
+}
+
+@Composable
+fun AmphibiansCard(amphibians: AmphibiansDataClass, modifier: Modifier = Modifier) {
+    Card {
+        Column {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(12.dp),
+            ) {
+                Text(
+                    text = amphibians.name,
+                    style = MaterialTheme.typography.titleLarge.copy(
+                        fontWeight = FontWeight.Bold
+                    ),
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+                Text(
+                    text = amphibians.type,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
+            }
+        }
+        AsyncImage(
+            model = ImageRequest.Builder(context = LocalContext.current)
+                .data(amphibians.imgSrc)
+                .crossfade(true)
+                .build(),
+            contentDescription = "Amphibians Photo",
+            modifier = Modifier.fillMaxWidth()
+        )
+        // Description
+        Text(
+            text = amphibians.description,
+            textAlign = TextAlign.Justify,
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onSurface,
+            modifier = Modifier.padding(4.dp)
+        )
+    }
+}
+
+@Composable
+fun AmphibiansList(
+    amphibiansList: List<AmphibiansDataClass>,
+    modifier: Modifier = Modifier,
+    contentPadding: PaddingValues= PaddingValues()
+) {
+    LazyColumn(
+        modifier = modifier.padding(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        items(amphibiansList) { amphibian ->
+            AmphibiansCard(
+                amphibians = amphibian,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+            )
+        }
+    }
+
 }

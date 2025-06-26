@@ -13,13 +13,14 @@ import com.example.amphibians_selftry.AmphibiansApplication
 import com.example.amphibians_selftry.data.AmphibiansRepository
 import com.example.amphibians_selftry.data.NetworkAmphibiansRepository
 import com.example.amphibians_selftry.network.AmphibiansApi
+import com.example.amphibians_selftry.network.AmphibiansDataClass
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
 
 
 sealed interface AmphibiansUiState {
-    data class Success(val amphibians: String) : AmphibiansUiState
+    data class Success(val amphibians: List<AmphibiansDataClass>) : AmphibiansUiState
     object Error : AmphibiansUiState
     object Loading : AmphibiansUiState
 }
@@ -37,10 +38,8 @@ class AmphibiansViewModel(private val amphibiansRepository: AmphibiansRepository
         viewModelScope.launch {
             amphibiansUiState = AmphibiansUiState.Loading
             amphibiansUiState = try {
-                val listResult = amphibiansRepository.getAmphibians()
-                AmphibiansUiState.Success(
-                    "Success: ${listResult.size} Mars photos retrieved"
-                )
+                    AmphibiansUiState.Success(amphibiansRepository.getAmphibians())
+
             } catch (e: IOException) {
                 AmphibiansUiState.Error
             } catch (e: HttpException) {
