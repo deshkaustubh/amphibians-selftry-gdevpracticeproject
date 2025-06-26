@@ -106,10 +106,15 @@ The UI layer is built with Jetpack Compose and consists of:
 2. Open the project in Android Studio
 3. Run the app on an emulator or physical device
 
-## Future Improvements
+## Screenshots
 
-- Implement local caching with Room database
-- Add offline support
-- Enhance UI with animations and transitions
-- Add search functionality
-- Implement unit and UI tests
+<div style="display: flex; justify-content: center">
+  <img src=".README_images/3a5f6509.png" width="300" alt="Amphibians List Screen" style="margin-right: 20px"/>
+  <img src=".README_images/bfd1680b.png" width="300" alt="Amphibian Detail Screen"/>
+</div>
+
+<!-- Alternate format for GitHub compatibility -->
+<p float="left">
+  <img src=".README_images/3a5f6509.png" width="300" />
+  <img src=".README_images/bfd1680b.png" width="300" /> 
+</p>
