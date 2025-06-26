@@ -6,12 +6,7 @@ import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Retrofit
 import retrofit2.http.GET
 
-private const val BASE_URL = "https://android-kotlin-fun-mars-server.appspot.com/"
 
-private val retrofit = Retrofit.Builder()
-    .addConverterFactory(Json.asConverterFactory("application/json".toMediaType())) // This line tells Retrofit to use Kotlinx Serialization to automatically convert JSON data from the API into Kotlin objects, and vice versa, using the "application/json" content type.
-    .baseUrl(BASE_URL)
-    .build()
 
 /*
 Retrofit uses the return type of the getAmphibians() function (List<AmphibiansDataClass>) to know what data to expect from the API. The AmphibiansDataClass is your Kotlin data class that matches the JSON structure returned by the API.  Here's how it works:
@@ -43,10 +38,7 @@ interface AmphibiansApiService {
 // PUBLIC SINGLETON THAT THE REST OF THE APP COULD ACCESS
 
 object AmphibiansApi {
-    val retrofitService: AmphibiansApiService by lazy {
-        //This line uses Retrofit to create an implementation of the AmphibiansApiService interface. The ::class.java part gets the Java class reference needed by Retrofit. This allows you to call the API methods defined in AmphibiansApiService as if they were regular Kotlin functions, and Retrofit handles the network requests for you.
-        retrofit.create(AmphibiansApiService::class.java) //::class.java is Kotlin syntax used to get the Java Class object of a Kotlin class. For example, AmphibiansApiService::class.java returns the Java Class reference for AmphibiansApiService, which is needed by Java-based libraries like Retrofit to create instances or perform reflection.
-    }
+
 }
 
 
