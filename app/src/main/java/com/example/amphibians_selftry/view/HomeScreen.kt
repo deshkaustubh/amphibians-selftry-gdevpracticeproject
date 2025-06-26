@@ -26,6 +26,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -140,21 +141,24 @@ fun AmphibiansCard(amphibians: AmphibiansDataClass, modifier: Modifier = Modifie
                 )
             }
         }
+        Spacer(modifier = Modifier.height(8.dp))
         AsyncImage(
             model = ImageRequest.Builder(context = LocalContext.current)
                 .data(amphibians.imgSrc)
                 .crossfade(true)
                 .build(),
             contentDescription = "Amphibians Photo",
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            contentScale = ContentScale.Crop
         )
+        Spacer(modifier = Modifier.height(8.dp))
         // Description
         Text(
             text = amphibians.description,
-            textAlign = TextAlign.Justify,
+            textAlign = TextAlign.Center,
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurface,
-            modifier = Modifier.padding(4.dp)
+            modifier = Modifier.padding(4.dp).fillMaxWidth()
         )
     }
 }
@@ -166,7 +170,7 @@ fun AmphibiansList(
     contentPadding: PaddingValues= PaddingValues()
 ) {
     LazyColumn(
-        modifier = modifier.padding(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)
+        modifier = modifier.padding(8.dp), verticalArrangement = Arrangement.spacedBy(18.dp)
     ) {
         items(amphibiansList) { amphibian ->
             AmphibiansCard(
